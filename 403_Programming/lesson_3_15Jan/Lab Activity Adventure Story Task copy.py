@@ -374,6 +374,7 @@ def show_location(location_name):
     else:
         print("Invalid choice. Please try again.")
         show_location(location_name)  # Stay in the current grid and prompt again
+        §
         if next_location == 'home' / 'lose':
             quit ()
         else:
