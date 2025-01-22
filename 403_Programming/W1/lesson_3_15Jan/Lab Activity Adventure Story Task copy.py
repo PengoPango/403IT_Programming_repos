@@ -43,7 +43,8 @@ Which way do you go?""",
         },
 
   'grid1nofather': {
-      "description": """\nyou look upon a forsaken land,
+      "description": """\nYou continue onwards,
+you look upon a forsaken land,
 there is nothing here but destruction and the dregs of hope.
 
 Which way do you go?""",
@@ -77,7 +78,7 @@ Which way do you go?""",
             },
         "paths": {
             "Upwards": 'grid5',
-            "Left": 'grid1',
+            "Left": 'grid1nofather',
             "Right": 'grid3'
             },
         },
@@ -367,21 +368,19 @@ def show_location(location_name):
         
         # If the path is N/A, prompt again without moving
         if next_location == "N/A":
-            print("This path is not available. Please choose another option.")
+            print("""\nThis path is not available. You think going this way would be a bad idea.
+Please choose another option.""")
             show_location(location_name)  # Stay in the current grid and prompt again
         else:
             show_location(next_location)  # Move to the next location
     else:
-        print("Invalid choice. Please try again.")
+        print("\nInvalid choice. Please try again.")
         show_location(location_name)  # Stay in the current grid and prompt again
-        §
+        
         if next_location == 'home' / 'lose':
             quit ()
         else:
             show_location(next_location)  # Move to the next location
-    else:
-        print("Invalid choice. Please try again.")
-        show_location(location_name)  # Stay in the current grid and prompt again
 
 # Start the game at grid0
 show_location('grid0')
