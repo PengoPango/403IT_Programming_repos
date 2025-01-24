@@ -93,6 +93,8 @@ Your eyes move along the location to the chapel entrance,
 there is an open gate, you see a lonesome priest through the gateway distracted in prayer.
 
 Do you enter the chapel?""",
+        "visited_description": """\n You find yourself back at the chapel,
+there is no value in reentering the chapel""",
         "choices": {
             "1": "Ignore the chapel",
             "2": "Enter the chapel"
@@ -101,9 +103,8 @@ Do you enter the chapel?""",
             "Ignore the chapel": 'grid3ignore',
             "Enter the chapel": 'grid3enter'
             },
+        "one_time_action": ["Enter the chapel"]
         },
-
-#options for talking to priest need coding in
     
     
     'grid3ignore': {
@@ -129,16 +130,99 @@ it quickly softens as he realises you are a threat.
 The priest wears scuffed and damaged armour adorned with religious icons,
 "Hello my child, what brings you here alone."
 
-"You must have many questions, but I can only answer one.""",
+"You must have many questions, but I can only answer one." """,
         "choices": {
-            "1": "What happened here?",
-            "2": "Do you know where my home is?",
+            "1": "Do you know where my home is?",
+            "2": "What happened here?",
             "3": "Where is God?",
-            "4": "Leave"
+            },
+        "paths": {
+            "Do you know where my home is?": 'priestguide',
+            "What happened here?": 'priestsgrief',
+            "Where is God?": 'priestgod'
             },
         },
 
-#need to code responses
+    'priestsgrief': {
+        "description": """\n"This chapel was once a house of God,
+protecting those in need and faith from the creatures that now roam,
+I protected and preached for all in need of hope.
+However one led too far astray, beseeched and lied to me,
+they asked me to come with them to help their people,
+I was foolish enough to join them in belief of helping those in need,
+however all i found was blasphemous horror.
+Upon my return my chapel and those i protected were desecrated and slaughtered.
+May God forgive my failings, for i shaln't forgive my own." """,
+        "choices": {
+            "1": "Leave the priest",
+            },
+        "paths": {
+            "Leave the priest":'grid3leavechapel',
+            },
+        },
+  
+    'priestguide': {
+        "description": """\n"I have seen a many wander these lands my child,
+I pray i am not incorrect but based on similar apparrel to yours,
+I had seen one a band of travellers travel upwards from this chapel,
+it is a dangerous path however, i pray God protects you on this path for I cannot accompany you,
+I must protect this chapel, I shall not falter in my duty twice." """,
+        "choices": {
+            "1": "Leave the priest",
+            },
+        "paths": {
+            "Leave the priest":'grid3leavechapel',
+            },
+        },
+  
+    'priestgod': {
+        "description": """\n"You surprise my child, to ask such a question at your age,
+I shall answer still as that was my word;
+
+Just as Enoch tells us, there was a war between the Angels of Heaven and those that had fallen,
+God also joined his children in this battle against the fallen, however he was wounded in this battle,
+having to kill one of his most beloved sons who turned on him, he faltered,
+leading to a blow which shook both heaven and hell.
+
+Ever since, God had not stepped foot on Earth, but always kept watch from heaven,
+keeping his epistemic distance but guiding us to flourish.
+yet now God has left our lands, that is why these abominations roam the lands,
+they are a pox upon God's light, it truly sickens me.
+I do not know why God has left us now, but I have faith God shall return,
+God cannot... no.
+God will not abandon us.
+Have faith in this as i do, child." """,
+        "choices": {
+            "1": "Leave the priest"
+            },
+        "paths": {
+            "Leave the priest":'grid3leavechapel'
+            },
+        },
+  
+  'grid3leavechapel': {
+      "description": """\nYou begin to leave the chapel...
+"Before you leave my child, beware upwards, there is a great demon to be careful of,
+I was able to bind him, but he still persists, you have no chance of victory"
+
+the priest turns and returns to prayer as you leave,
+you hope the wisdom he has granted you aids your perspective,
+you look back out upon the twisted, ruinous land.
+You cannot forget your purpose, you must find your family, they need you.
+
+Which way do you go?""",
+        "choices": {
+            "1": "Upwards",
+            "2": "Left",
+            "3": "Right"
+            },
+        "paths": {
+            "Upwards": 'grid6',
+            "Left": 'grid2',
+            "Right": 'N/A'
+            },
+        },
+
         
     'grid4': {
         "description": """\nYou continue onwards,
@@ -340,6 +424,7 @@ You lose."""
 }
 #------------------------------------------------------------------------------
 
+#starting game print
 print("""Welcome to your quest,
 You are a child in a wartorn land,
 Sin is more rampant than ever,
@@ -349,6 +434,8 @@ you succeeding in finding food for your people,
 but your father is dead.
 
 You must find home.""")
+
+visited = {}
 
 # The main loop of the game
 def show_location(location_name):
@@ -364,7 +451,22 @@ def show_location(location_name):
     
     # If the player chooses a valid path
     if player_choice in location_data['choices']:
-        next_location = location_data['paths'][location_data['choices'][player_choice]]
+        action = location_data['choices'][player_choice]
+        next_location = location_data['paths'][action]
+
+            #if player repeats an unrepeatable task eg 'trying to talk to priest again'
+     
+        if 'one_time_action' in location_data:
+            if location_name not in visited:
+                visited[location_name] = set ()
+            if action in location_data["one_time_action"] and action in visited[location_name]:
+                print("""\nYou cannot perform this action again!
+Please choose another option.""")
+                show_location(location_name)
+                return
+            else:
+                visited[location_name].add(action)
+
         
         # If the path is N/A, prompt again without moving
         if next_location == "N/A":
@@ -373,6 +475,7 @@ Please choose another option.""")
             show_location(location_name)  # Stay in the current grid and prompt again
         else:
             show_location(next_location)  # Move to the next location
+
     else:
         print("\nInvalid choice. Please try again.")
         show_location(location_name)  # Stay in the current grid and prompt again
@@ -381,6 +484,7 @@ Please choose another option.""")
             quit ()
         else:
             show_location(next_location)  # Move to the next location
+            
 
 # Start the game at grid0
 show_location('grid0')
