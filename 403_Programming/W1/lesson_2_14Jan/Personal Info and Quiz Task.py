@@ -1,9 +1,10 @@
 name = input("What is your name?")
-surname = input ("What is your surname")
+surname = input("What is your surname")
 age = int(input("How old are you?"))
 
 
-print ("My name is", name, "\nI am here!", "\nMy surname is", surname, "\nI am",age, "years old and will be", age+1, "next.")
+print ("My name is", name, "\nI am here!", "\nMy surname is", surname,
+       "\nI am",age, "years old and will be", age+1, "next.")
 
 print ("\n\n Next we will ask you some questions")
 
