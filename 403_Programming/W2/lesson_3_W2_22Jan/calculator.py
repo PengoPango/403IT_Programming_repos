@@ -1,5 +1,3 @@
-class CustomException(Exception):
-    pass
 
 def calculator(n1, operator, n2):
     try:
