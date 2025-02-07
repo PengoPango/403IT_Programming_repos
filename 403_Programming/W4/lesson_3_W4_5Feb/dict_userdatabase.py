@@ -1,5 +1,5 @@
 user_database = {}
-
+ 
 def add_user():
     name = input("Enter name: ")
     email = input("Enter email: ")
