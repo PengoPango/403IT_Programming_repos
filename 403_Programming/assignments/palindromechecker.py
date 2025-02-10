@@ -1,3 +1,7 @@
+print("""This is Ocean's Palindrome Checker,
+This Checker only accepts letter
+numbers and special characters are removed""")
+
 while True:
     try:
         #input word to be reversed
@@ -6,14 +10,16 @@ What word would you like to test :"""))
 
         #makes capitals into lower case
         word = word.lower()           
-    
+
         #catalogue to remove special characters, punctuation, spaces
         for letter in word:
+            
             if letter not in "abcdefghijklmnopqrstuvwxyz":
                 word=word.replace(letter,'')
+
     finally:
         if word == 'q':
-            print("Goodbye!")
+            print("\nGoodbye!")
             break
         
         #code to reverse word
