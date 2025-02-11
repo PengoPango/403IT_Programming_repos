@@ -15,8 +15,6 @@ def calculator(n1, operator, n2):
             return ("Invalid operator")
     except ZeroDivisionError:
         return "Divsion by 0 is not allowed"
-    except CustomException:
-        print ("This is not an operator")
 
 #loop
 while True:
