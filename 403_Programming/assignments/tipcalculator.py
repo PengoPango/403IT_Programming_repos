@@ -2,7 +2,7 @@
 print("""This is Ocean's Tip Calculator""")
 
 
-#class for menu list
+#dictionary for menu list
 menu = {
     'fries': 4,
 
@@ -57,38 +57,52 @@ What would you like to order? """)
         #except block to complete loop       
         except:
             ValueError
-
+            
     #tip calculator function
     def tipcalculator(ordertotal, tipamount):
         try:
-            if tipamount not in ("5%", "5", "10%", "10", "20%", "20", "custom", "none"):
+            if tipamount not in ("5", "10", "20", "custom", "none"):
                 raise CustomException("Not an option")
-            if tipamount == '5':
+            elif tipamount == '5':
                 return ordertotal * 1.05
-            if tipamount == '10':
+            elif tipamount == '10':
                 return ordertotal * 1.1
-            if tipamount == '20':
+            elif tipamount == '20':
                 return ordertotal * 1.2
-            if tipamount == 'custom':
+            elif tipamount == 'custom':
                 return (ordertotal * customamount/100) + ordertotal
-            if tipamount == 'none':
+            else:
+                tipamount == 'none'
                 return ordertotal * 1
         except ValueError:
             print("This is not an option")
 
     #prompts what option you will pick, recalls to the calculator
     print("\nYour final order is",addedorder, "and costs £",round(ordertotal, 2))
-    tipamount = input("""\nWould you like to add a tip?
+
+#while loop to repeatedly ask until a valid input is put in, breaks when valid input is put in, continuing code onwards
+    while True:
+        try:
+            tipamount = input("""\nWould you like to add a tip?
 5%, 10%, 20%, Custom, None
-What % would you like to tip: """)
+What would you like to tip: """)
 
-    #makes word lowercase
-    tipamount = tipamount.lower()
+            #makes word lowercase
+            tipamount = tipamount.lower()
 
-    #for if custom is picked
-    if tipamount == 'custom':
-        customamount = int(input("What % tip would you like to add: "))
-
+            #for if custom is picked
+            if tipamount == 'custom':
+                customamount = int(input("What % tip would you like to add: "))
+                break
+            #for other valid
+            elif tipamount in ("5", "10", "20", "none"):
+                break
+            #for inputs that aren't valid
+            elif tipamount not in ("5", "10", "20", "none"):
+                print("This is not an option, If you wish to add a custom amount, choose the 'Custom' option")
+        except ValueError:
+            print("This is not an option, If you wish to add a custom amount, choose the 'Custom' option")
+            
     #shows the result of the order with tip
     result = tipcalculator(ordertotal, tipamount)
     print ("\nYou have paid £",round(ordertotal, 2), "for the bill, You have paid overall £",round(result, 2))
