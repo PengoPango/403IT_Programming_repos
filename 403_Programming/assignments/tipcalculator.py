@@ -1,6 +1,10 @@
 #Student ID 15228802
 print("""This is Ocean's Tip Calculator""")
 
+#need to make script to not allow order if empty order list
+#            class NoOrderError (Exception):
+#                """Exception for when your order is empty and you try to finish order"""
+#                pass
 
 #dictionary for menu list
 menu = {
@@ -126,3 +130,6 @@ What would you like to tip: """)
         break
     else:
         print("This is not an option")
+
+
+
